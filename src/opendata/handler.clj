@@ -5,7 +5,8 @@
             [hiccup.middleware :refer [wrap-base-url]]
             [compojure.handler :as handler]
             [compojure.route :as route]
-            [opendata.routes.home :refer [home-routes]]))
+            [opendata.routes.home :refer [home-routes]]
+            [opendata.routes.apiv1.transparency-report :refer [api-routes]]))
 
 (defn init []
   (println "opendata is starting"))
@@ -18,6 +19,6 @@
   (route/not-found "Not Found"))
 
 (def app
-  (-> (routes home-routes app-routes)
+  (-> (routes home-routes api-routes app-routes)
       (handler/site)
       (wrap-base-url)))

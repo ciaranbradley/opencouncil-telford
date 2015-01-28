@@ -43,8 +43,8 @@
   {Supplier Name(T) 100.00} "
   [k line]
   {:name (getkey line k) :value (if-not (= (get line (key-ret :amount)) "")
-                     (read-string (get line (key-ret :amount)))
-                     0.00)})
+                                  (read-string (get line (key-ret :amount)))
+                                  0.00)})
 
 ;; (amount-by-key :service-delivery-team testdata)
 
@@ -62,10 +62,10 @@
                   (for [x (map
                            (fn [line]
                              (if-not (= line {"" ""})
-                               (amount-by-key :account
+                               (amount-by-key :supplier-name
                                               line)))
                            lines)]
-                    {(:name x)(:value x)})))])
+                    {(:name x)(:value x)})))])))
 
-   (defroutes home-routes
-     (GET "/" [] (home)))))
+(defroutes home-routes
+     (GET "/" [] (home)))
