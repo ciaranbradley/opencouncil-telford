@@ -5,9 +5,10 @@
                  [compojure "1.1.6"]
                  [hiccup "1.0.5"]
                  [ring-server "0.3.1"]
+                 [midje "1.6.3"]
                  [opencsv-clj "2.0.1"]
                  [csv-map "0.1.1"]]
-  :plugins [[lein-ring "0.8.12"]]
+  :plugins [[lein-ring "0.8.12"][lein-midje "3.1.3"]]
   :ring {:handler opendata.handler/app
          :init opendata.handler/init
          :destroy opendata.handler/destroy}

@@ -27,7 +27,6 @@
                "Service Delivery Area(T)" "Adult Social Services"})
 
 
-
 (defn key-ret [k]
   "Return the correct keyword from the exp-map"
   (k exp-over-100-format))
@@ -43,7 +42,7 @@
   :supplier-name line returns
   {Supplier Name(T) 100.00} "
   [k line]
-  {(getkey line k) (if-not (= (get line (key-ret :amount)) "")
+  {:name (getkey line k) :value (if-not (= (get line (key-ret :amount)) "")
                      (read-string (get line (key-ret :amount)))
                      0.00)})
 
@@ -55,11 +54,18 @@
    [:h1 "Expenditure over 100 November 2014"]
    (let [lines (csv/parse-csv (slurp "Transparency_Report_November_2014.csv")
                               :key "amount")]
-              [:div (apply str (merge-with + (map (fn [line]
-                           (if-not (= line {"" ""})
-                              (amount-by-key :supplier-name line))) lines)))
+     [:table
 
-               ])))
+      (map (fn [[k v]]
+             [:tr [:td k] [:td (clojure.pprint/cl-format nil "~,2f" v)]])
+           (apply merge-with +
+                  (for [x (map
+                           (fn [line]
+                             (if-not (= line {"" ""})
+                               (amount-by-key :account
+                                              line)))
+                           lines)]
+                    {(:name x)(:value x)})))])
 
-(defroutes home-routes
-  (GET "/" [] (home)))
+   (defroutes home-routes
+     (GET "/" [] (home)))))
