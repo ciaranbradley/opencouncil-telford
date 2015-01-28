@@ -28,7 +28,6 @@
 
 
 
-
 (defn key-ret [k]
   "Return the correct keyword from the exp-map"
   (k exp-over-100-format))
@@ -48,7 +47,7 @@
                      (read-string (get line (key-ret :amount)))
                      0.00)})
 
-;;(amount-by-key :service-delivery-team testdata)
+;; (amount-by-key :service-delivery-team testdata)
 
 
 (defn home []
@@ -56,9 +55,9 @@
    [:h1 "Expenditure over 100 November 2014"]
    (let [lines (csv/parse-csv (slurp "Transparency_Report_November_2014.csv")
                               :key "amount")]
-              [:div (merge-with + (map (fn [line]
+              [:div (apply str (merge-with + (map (fn [line]
                            (if-not (= line {"" ""})
-                              [:div (str (amount-by-key :supplier-name line))])) lines))
+                              (amount-by-key :supplier-name line))) lines)))
 
                ])))
 
