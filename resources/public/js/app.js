@@ -15,7 +15,7 @@ var svg = d3.select("body").append("svg")
     .attr("class", "bubble");
 
 
-d3.json("api/v1/transparency-report/2014/supplier-name", function(error, root) {
+d3.json("api/v1/transparency-report/2014/service-delivery-area", function(error, root) {
   console.log(classes(root));
   var node = svg.selectAll(".node")
       .data(bubble.nodes(classes(root))
