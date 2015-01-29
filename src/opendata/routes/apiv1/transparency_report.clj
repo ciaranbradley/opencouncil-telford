@@ -5,11 +5,31 @@
             [cheshire.core :refer [generate-string]]
             [csv-map.core :as csv]))
 
-(def report "Transparency_Report_November_2014.csv")
+(def report "Transparency_Report_January_2014.csv")
+
+(def reports {:2014 {:january    "Transparency_Report_January_2014.csv"
+                     :february   "Transparency_Report_February_2014.csv"
+                     :march      "Transparency_Report_March_2014.csv"
+                     :april      "Transparency_Report_April_2014.csv"
+                     :may        "Transparency_Report_May_2014.csv"
+                     :june       "Transparency_Report_June_2014.csv"
+                     :july       "Transparency_Report_July_2014.csv"
+                     :august     "Transparency_Report_August_2014.csv"
+                     :september  "Transparency_Report_September_2014.csv"
+                     :october    "Transparency_Report_October_2014.csv"
+                     :november   "Transparency_Report_November_2014.csv"
+                     :december nil}})
+
+(defn select-report
+  "Takes a selection string of format 2014/january and returns the report string from
+  the reports map"
+  [year month]
+  (get (get reports (keyword year)) (keyword month)))
+
+(select-report "2014" "january")
 
 
-(def exp-over-100-format
-  {
+(def exp-over-100-format {
    :service-delivery-area "Service Delivery Area(T)"
    :service-delivery-team "Service Delivery Team(T)"
    :cost-c                "CostC"
@@ -25,7 +45,6 @@
   "Return the correct keyword from the exp-map"
   (k exp-over-100-format))
 
-
 (defn getkey [line k]
   (get line (key-ret k)))
 
@@ -40,8 +59,7 @@
                                   0.00)})
 
 (defn get-trans-rep-amounts
-  "Gets the transparency report amounts for key
-  "
+  "Gets the transparency report amounts for column key"
   [column]
   (let [lines (csv/parse-csv (slurp report)
                              :key "amount")]
@@ -55,13 +73,42 @@
              {(:name x)  (:value x)}))))
 
 
+
+(defn get-report-amounts
+  "Gets the transparency report amounts for column key"
+  [year month column]
+
+  (if-let [report (select-report year month)]
+
+    (if (key-ret (keyword column))
+
+      (let [lines (csv/parse-csv (slurp report) :key "amount")]
+        (apply merge-with +
+               (for [x (map
+                        (fn [line]
+                          (if-not (= line {"" ""})
+                            (amount-by-key (keyword column) line)))
+                      lines)]
+               {(:name x)  (:value x)})))
+      (str "No such column"))
+    (str "No report found")))
+
+
+
+;;
+;; Might be nice
+;;
+
 (defn describe-service
   "Provides a description of the service endpoint"
   [request]
   {:name "Transparency Report"
    :description "Hacking on the T & W Transparency Report"
    :methods (keys exp-over-100-format)})
-
+;;
+;;
+;; Resource points
+;;
 (defresource describe-service
   :allowed-methods [:get]
   :handle-ok (fn [request] (generate-string
@@ -76,7 +123,14 @@
                (generate-string (get-trans-rep-amounts column)))
   :available-media-types ["application/json"])
 
+(defresource get-report
+  :allowed-methods [:get]
+  :handle-ok (fn [{{{year :year month :month column :column} :route-params} :request}]
+               (generate-string (get-report-amounts year month column)))
+  :available-media-types ["application/json"])
+
 
 (defroutes api-routes
   (GET "/api/v1/transparency-report/" request describe-service)
-  (GET "/api/v1/transparency-report/2014/:column" request get-trans-amounts))
+  (GET "/api/v1/transparency-report/2014/:column" request get-trans-amounts)
+  (GET "/api/v1/transparency-report/:year/:month/:column" request get-report))

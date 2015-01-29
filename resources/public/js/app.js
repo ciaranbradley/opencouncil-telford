@@ -1,5 +1,5 @@
 $(function() {
-  var diameter = 1300,
+  var diameter = 1250,
     format = d3.format(",d"),
     color = d3.scale.category20c();
 
@@ -14,8 +14,7 @@ var svg = d3.select("body").append("svg")
     .attr("height", diameter)
     .attr("class", "bubble");
 
-var apiurl = "api/v1/transparency-report/2014"
-
+var apiurl = "api/v1/transparency-report"
 
 
   function drawBubbles() {
@@ -65,6 +64,14 @@ var apiurl = "api/v1/transparency-report/2014"
 			.duration(duration * 1.2)
 			.style('opacity', 1);
 
+      vis.append("title")
+      .text(function(d) { return d.name + ": " + d.size;});
+
+      vis.append("text")
+      .attr("dy", ".3em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return d.name.substring(0, d.r / 3); });
+
 		// exit
 		vis.exit()
 			.transition()
@@ -107,6 +114,50 @@ function processData(root) {
   return {children: classes};
 }
 
+function buildUrl(event) {
+
+  var hash = window.location.hash.replace("#","");
+
+  var urlmap = hash.split("/");
+
+  console.log(urlmap);
+  var segment = $(event.target).attr("href").replace("#/", "");
+
+
+  console.log(segment);
+
+  var segment_type = $(event.target).attr("class");
+
+  console.log(segment_type);
+
+  var newUrl = "";
+
+  switch(segment_type) {
+
+    case "year-name":
+      newUrl += "#/" + segment + "/" + urlmap[2] + "/" + urlmap[3];
+    break;
+    case "month-name":
+      newUrl += "#/" + urlmap[1] + "/" + segment + "/" + urlmap[3];
+    break;
+    case "column-name":
+       newUrl += "#/" + urlmap[1] + "/" + urlmap[2] + "/" + segment;
+    break;
+
+
+
+  }
+  console.log(newUrl);
+  window.location.hash = newUrl;
+
+  $(event.target).attr("href", newUrl);
+  return newUrl;
+
+
+
+}
+
+$("div.menu").delegate('a', 'click', buildUrl);
 
 $(".column-name").click(drawBubbles);
 
