@@ -52,20 +52,22 @@
 (defn home []
   (layout/common
    [:h1 "Expenditure over 100 November 2014"]
-   (let [lines (csv/parse-csv (slurp "Transparency_Report_November_2014.csv")
-                              :key "amount")]
-     [:table
 
-      (map (fn [[k v]]
-             [:tr [:td k] [:td (clojure.pprint/cl-format nil "~,2f" v)]])
-           (apply merge-with +
-                  (for [x (map
-                           (fn [line]
-                             (if-not (= line {"" ""})
-                               (amount-by-key :supplier-name
-                                              line)))
-                           lines)]
-                    {(:name x)(:value x)})))])))
+;   (let [lines (csv/parse-csv (slurp "Transparency_Report_November_2014.csv")
+;                              :key "amount")]
+;     [:table
+;
+;      (map (fn [[k v]]
+;             [:tr [:td k] [:td (clojure.pprint/cl-format nil "~,2f" v)]])
+;           (apply merge-with +
+;                  (for [x (map
+;                           (fn [line]
+;                             (if-not (= line {"" ""})
+;                               (amount-by-key :supplier-name
+;                                              line)))
+;                           lines)]
+;                    {(:name x)(:value x)})))])))
+))
 
 (defroutes home-routes
      (GET "/" [] (home)))
