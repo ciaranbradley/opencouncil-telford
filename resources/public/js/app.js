@@ -17,11 +17,11 @@ var svg = d3.select("body").append("svg")
 var apiurl = "api/v1/transparency-report"
 
 
-  function drawBubbles() {
+  function drawBubbles(newUrl) {
 
-    var hash = window.location.hash;
-    console.log(hash.replace("#",""));
-    var url = apiurl + hash.replace("#","");
+    //var hash = window.location.hash;
+    //console.log(hash.replace("#",""));
+    var url = apiurl + newUrl.replace("#","");
 
     d3.json(url, function(error, root) {
       console.log(processData(root));
@@ -118,13 +118,17 @@ function buildUrl(event) {
 
   var hash = window.location.hash.replace("#","");
 
+  event.preventDefault();
+
   var urlmap = hash.split("/");
 
   console.log(urlmap);
+
   var segment = $(event.target).attr("href").replace("#/", "");
 
 
   console.log(segment);
+
 
   var segment_type = $(event.target).attr("class");
 
@@ -144,22 +148,21 @@ function buildUrl(event) {
        newUrl += "#/" + urlmap[1] + "/" + urlmap[2] + "/" + segment;
     break;
 
-
-
   }
   console.log(newUrl);
-  window.location.hash = newUrl;
 
-  $(event.target).attr("href", newUrl);
+
+  window.location = newUrl;
+
+  drawBubbles(newUrl);
+  //$(event.target).attr("href", newUrl);
   return newUrl;
-
-
 
 }
 
 $("div.menu").delegate('a', 'click', buildUrl);
 
-$(".column-name").click(drawBubbles);
+//$(".column-name").click(drawBubbles);
 
 d3.select(self.frameElement).style("width", diameter + "px").style("height", 800 + "px");
 
