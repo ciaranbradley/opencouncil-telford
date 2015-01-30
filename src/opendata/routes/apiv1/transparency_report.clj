@@ -72,6 +72,10 @@
                     lines)]
              {(:name x)  (:value x)}))))
 
+(defn get-all-payments
+  "Returns a list of all payments to one column value"
+  [])
+
 
 
 (defn get-report-amounts
