@@ -9,6 +9,7 @@
                      get-report-amounts]]
   (:use midje.sweet))
 
+
 (def testdata {"" "",
                "Amount" "150.00",
                "Trans Date" "12/11/2014",

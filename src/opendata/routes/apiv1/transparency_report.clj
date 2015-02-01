@@ -20,15 +20,6 @@
                      :november   "Transparency_Report_November_2014.csv"
                      :december nil}})
 
-(defn select-report
-  "Takes a selection string of format 2014/january and returns the report string from
-  the reports map"
-  [year month]
-  (get (get reports (keyword year)) (keyword month)))
-
-(select-report "2014" "january")
-
-
 (def exp-over-100-format {
    :service-delivery-area "Service Delivery Area(T)"
    :service-delivery-team "Service Delivery Team(T)"
@@ -39,6 +30,13 @@
    :transaction-date      "Trans Date"
    :amount                "Amount"
    })
+
+
+(defn select-report
+  "Takes a selection string of format 2014/january and returns the report file string from
+  the reports map"
+  [year month]
+  (get (get reports (keyword year)) (keyword month)))
 
 
 (defn key-ret [k]
@@ -75,7 +73,6 @@
 (defn get-all-payments
   "Returns a list of all payments to one column value"
   [])
-
 
 
 (defn get-report-amounts

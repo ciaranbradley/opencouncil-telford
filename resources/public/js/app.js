@@ -164,6 +164,6 @@ $("div.menu").delegate('a', 'click', buildUrl);
 
 //$(".column-name").click(drawBubbles);
 
-d3.select(self.frameElement).style("width", diameter + "px").style("height", 800 + "px");
+//d3.select(self.frameElement).style("width", diameter + "px").style("height", 800 + "px");
 
 });
