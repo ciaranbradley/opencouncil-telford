@@ -1,5 +1,6 @@
 (ns opendata.routes.apiv1.transparency-report
   (:require [clojure.edn :as edn]
+            [clojure.java.io :as io]
             [compojure.core :refer :all]
             [liberator.core
              :refer [defresource resource request-method-in]]
@@ -9,6 +10,9 @@
 ;;
 ;; A map of the available reports
 ;;
+
+(def reports-folder "data/")
+
 (def reports {:2014 {:january    "Transparency_Report_January_2014.csv"
                      :february   "Transparency_Report_February_2014.csv"
                      :march      "Transparency_Report_March_2014.csv"
@@ -88,7 +92,7 @@
   "Takes a CSV report and a keyword for the column map
   and returns a vector of maps [{}{}{}] of all payments to one column"
   [report key-column]
-  (let [lines (csv/parse-csv (slurp report)
+  (let [lines (csv/parse-csv (slurp (io/resource (str reports-folder report)))
                              :key "amount")]
     (map (fn [line]
            (amount-by-key key-column line))
