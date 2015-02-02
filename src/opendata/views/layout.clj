@@ -3,7 +3,7 @@
             [hiccup.element :refer [link-to]]))
 
 (defn menu []
-  [:div.menu
+  [:div#navigation
    [:div.year-select
     (link-to {:class "year-name"} (str "#/2014") "2014")]
    [:div.month-select

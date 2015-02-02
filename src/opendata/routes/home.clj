@@ -9,7 +9,7 @@
 ;;
 (defn home []
   (layout/common
-   [:h1 "Expenditure over 100" [:span.title-replace]]))
+   [:h1 "Expenditure over 100 " [:span#title-replace]]))
 
 (defroutes home-routes
      (GET "/" [] (home)))

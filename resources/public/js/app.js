@@ -92,14 +92,19 @@ $(function() {
     }
 
     function updateTitle(year, month, column) {
-        $("#title-replace").text(year + " ");
+        $("#title-replace").text("for " +
+                                 month.replace("/^[a-z]/",
+                                               function(l) { return l.toUpperCase()}) +
+                                 " " + year +
+                                 " by " +
+                                 column.replace("-", " "));
     }
 
-    function buildUrl(hash, segment, segment_type) {
+    function buildUrl(urlmap, segment, segment_type) {
 
-        var urlmap = hash.replace("#").split("/");
+        //var urlmap = hash.replace("#").split("/");
 
-        console.log(urlmap);
+        console.log("Urlmap: " + urlmap);
 
         console.log(segment);
 
@@ -110,20 +115,45 @@ $(function() {
         switch(segment_type) {
 
         case "year-name":
-            newUrl += "#/" + segment + "/" + urlmap[2] + "/" + urlmap[3];
+            newUrl += "#/" + segment + "/" + urlmap[1] + "/" + urlmap[2];
             break;
         case "month-name":
-            newUrl += "#/" + urlmap[1] + "/" + segment + "/" + urlmap[3];
+            newUrl += "#/" + urlmap[0] + "/" + segment + "/" + urlmap[2];
             break;
         case "column-name":
-            newUrl += "#/" + urlmap[1] + "/" + urlmap[2] + "/" + segment;
-            break;
-
+            newUrl += "#/" + urlmap[0] + "/" + urlmap[1] + "/" + segment;
+            break
+        default:
+            //just return the urlmap as is
+            newUrl += "#/" + urlmap[0] + "/" + urlmap[1] + "/" + urlmap[2];
         }
         console.log(newUrl);
 
         return newUrl;
 
+    }
+
+    function getUrlParts(hash) {
+
+        var urlmap = hash.replace("#").split("/");
+
+        console.log(urlmap);
+
+        if(urlmap[1] == undefined) {
+            urlmap[1] = "2014";
+        }
+
+        if(urlmap[2] == undefined) {
+            urlmap[2] = "november";
+        }
+
+        if(urlmap[3] == undefined) {
+            urlmap[3] = "supplier-name";
+        }
+
+        console.log(urlmap);
+
+        return [urlmap[1], urlmap[2], urlmap[3]];
     }
 
     function handleClick(event) {
@@ -133,17 +163,29 @@ $(function() {
         var segment = $(event.target).attr("href").replace("#/", "");
         var segment_type = $(event.target).attr("class");
 
-        //var urlparts = getUrlParts(hash, segment, segment_type);
+        var urlparts = getUrlParts(hash);
 
-        var newUrl = buildUrl(hash, segment, segment_type);
+        var newUrl = buildUrl(urlparts, segment, segment_type);
 
-
+        //updateTitle(urlparts[0],urlparts[1], urlparts[2]);
 
         window.location = newUrl;
         drawBubbles(newUrl);
 
     }
 
-    $("div.menu").delegate('a', 'click', handleClick);
+    function handleFirstLoad(event) {
+        var hash = window.location.hash;
+        console.log(hash);
 
+        var urlparts = getUrlParts(hash);
+
+        var newUrl = buildUrl(urlparts);
+
+        window.location = newUrl;
+        drawBubbles(newUrl);
+    }
+
+    $("div#navigation").delegate('a', 'click', handleClick);
+    $(document).ready(handleFirstLoad);
 });
