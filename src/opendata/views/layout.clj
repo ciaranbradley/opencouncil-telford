@@ -20,8 +20,6 @@
     (link-to {:class "month-name"} (str "#/november") "November")
     ;;(link-to (str "#december") "December")
     ]
-
-
    [:div.column-name
    (link-to {:class "column-name"} (str "#/service-delivery-area") "Delivery Area ")
    (link-to {:class "column-name"} (str "#/service-delivery-team") "Delivery Team ")
