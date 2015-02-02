@@ -22,8 +22,6 @@ $(function() {
 
         d3.json(url, function(error, root) {
 
-            console.log(processData(root));
-
             // generate data with calculated layout value
             var nodes = bubble.nodes(processData(root))
                     .filter(function(d) { return !d.children; }); // filter out the outer bubble
@@ -102,14 +100,6 @@ $(function() {
 
     function buildUrl(urlmap, segment, segment_type) {
 
-        //var urlmap = hash.replace("#").split("/");
-
-        console.log("Urlmap: " + urlmap);
-
-        console.log(segment);
-
-        console.log(segment_type);
-
         var newUrl = "";
 
         switch(segment_type) {
@@ -122,12 +112,11 @@ $(function() {
             break;
         case "column-name":
             newUrl += "#/" + urlmap[0] + "/" + urlmap[1] + "/" + segment;
-            break
+            break;
         default:
             //just return the urlmap as is
             newUrl += "#/" + urlmap[0] + "/" + urlmap[1] + "/" + urlmap[2];
         }
-        console.log(newUrl);
 
         return newUrl;
 
@@ -136,8 +125,6 @@ $(function() {
     function getUrlParts(hash) {
 
         var urlmap = hash.replace("#").split("/");
-
-        console.log(urlmap);
 
         if(urlmap[1] == undefined) {
             urlmap[1] = "2014";
@@ -151,14 +138,13 @@ $(function() {
             urlmap[3] = "supplier-name";
         }
 
-        console.log(urlmap);
-
         return [urlmap[1], urlmap[2], urlmap[3]];
     }
 
     function handleClick(event) {
 
         event.preventDefault();
+
         var hash = window.location.hash;
         var segment = $(event.target).attr("href").replace("#/", "");
         var segment_type = $(event.target).attr("class");
@@ -175,11 +161,9 @@ $(function() {
     }
 
     function handleFirstLoad(event) {
+
         var hash = window.location.hash;
-        console.log(hash);
-
         var urlparts = getUrlParts(hash);
-
         var newUrl = buildUrl(urlparts);
 
         window.location = newUrl;

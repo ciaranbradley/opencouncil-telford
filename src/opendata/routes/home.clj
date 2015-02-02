@@ -14,7 +14,7 @@
 (defn description []
   (layout/common
    [:h1 "Description"]
-   [:div "A simple graph application"]))
+   [:p "A simple graph application"]))
 
 (defroutes home-routes
   (GET "/" [] (home))

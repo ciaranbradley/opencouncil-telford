@@ -19,4 +19,3 @@
         (fact "Test incorrect resource responds with a 404"
           (let [response (app (mock/request :get "/api/v1/transparency-report/2013/january/supplier-name"))]
             (:status response) => 404)))
-
