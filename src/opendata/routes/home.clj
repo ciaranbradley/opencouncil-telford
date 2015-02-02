@@ -11,5 +11,11 @@
   (layout/common
    [:h1 "Expenditure over 100 " [:span#title-replace]]))
 
+(defn description []
+  (layout/common
+   [:h1 "Description"]
+   [:div "A simple graph application"]))
+
 (defroutes home-routes
-     (GET "/" [] (home)))
+  (GET "/" [] (home))
+  (GET "/description" [] (description)))
