@@ -7,6 +7,9 @@
 
 (def report "Transparency_Report_January_2014.csv")
 
+;;
+;; A list of the available reports
+;;
 (def reports {:2014 {:january    "Transparency_Report_January_2014.csv"
                      :february   "Transparency_Report_February_2014.csv"
                      :march      "Transparency_Report_March_2014.csv"
@@ -20,6 +23,10 @@
                      :november   "Transparency_Report_November_2014.csv"
                      :december nil}})
 
+
+;;
+;; These columns are mapped from the Transparency Report format
+;;
 (def exp-over-100-format {
    :service-delivery-area "Service Delivery Area(T)"
    :service-delivery-team "Service Delivery Team(T)"
@@ -32,23 +39,39 @@
    })
 
 
+;;
+;; Helper function to round the values from the data
+;; Taken from stack overflow
+;; http://stackoverflow.com/questions/10751638/clojure-rounding-to-decimal-places
+;;
+(defn round
+  [precision d]
+  (let [factor (Math/pow 10 precision)]
+    (/ (Math/round (* d factor)) factor)))
+;;
+;; Accessor functions to the reports and formats
+;;
 (defn select-report
   "Takes a selection string of format 2014/january and returns the report file string from
   the reports map"
   [year month]
   (get (get reports (keyword year)) (keyword month)))
 
-
-(defn key-ret [k]
-  "Return the correct keyword from the exp-map"
+(defn key-ret
+  "Returns the column name from the keyword map"
+  [k]
   (k exp-over-100-format))
 
 (defn getkey [line k]
   (get line (key-ret k)))
 
+
+;;
+;; Functions to parse the data to be consumed by the front end 
+;;
 (defn amount-by-key
-  "Returns takes a :key and returns a map
-  with the string key and the amount eg
+  "Takes a :key and a line of data, returns a map
+  with the value in the relevent column and the amount
   :supplier-name line returns
   {Supplier Name(T) 100.00} "
   [k line]
@@ -71,28 +94,57 @@
              {(:name x)  (:value x)}))))
 
 (defn get-all-payments
-  "Returns a list of all payments to one column value"
-  [])
+  "Takes a CSV report and a keyword for the column map
+  and returns a vector of maps [{}{}{}] of all payments to one column"
+  [report key-column]
+  (let [lines (csv/parse-csv (slurp report)
+                             :key "amount")]
+    (map (fn [line]
+           (amount-by-key key-column line))
+         lines)))
+
+
+;;
+;; Rounding function for the payments
+;;
+(defn round-payments
+  [paymentsmap]
+  (into {} (for [[k v] paymentsmap]
+             [k (round 2 v)])))
+
+(defn get-payment-totals
+  "Takes a vector of maps in the form 
+   [{:name \"some string\" :value xx.xx }
+   {:name \"Another string\" :value xxx.xx}] 
+   and aggregates all values to each  string type
+   returns a condensed map of the aggregates 
+  {\"some string\" xx.xx, \"Another string\" xxx.xx}"
+  [report key-column]
+  (round-payments (apply merge-with +
+                         (for [x (get-all-payments report key-column)]
+                           {(:name x) (:value x)}))))
+
+
+;;
+;; May be possible to iterate over the payments with a query for a certain column
+;; 
+(defn query-payments
+  "Takes a map of payments and a string and seaches the
+  map for that key"
+  [payments key]
+  (get payments key))
 
 
 (defn get-report-amounts
   "Gets the transparency report amounts for column key"
   [year month column]
-
   (if-let [report (select-report year month)]
-
     (if (key-ret (keyword column))
-
-      (let [lines (csv/parse-csv (slurp report) :key "amount")]
-        (apply merge-with +
-               (for [x (map
-                        (fn [line]
-                          (if-not (= line {"" ""})
-                            (amount-by-key (keyword column) line)))
-                      lines)]
-               {(:name x)  (:value x)})))
+      (get-payment-totals report (keyword column))
       (str "No such column"))
     (str "No report found")))
+
+
 
 
 
