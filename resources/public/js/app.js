@@ -1,5 +1,5 @@
 $(function() {
-  var diameter = 1250,
+    var diameter = 1250,
     format = d3.format(",d"),
     color = d3.scale.category20c();
 

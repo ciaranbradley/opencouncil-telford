@@ -3,7 +3,7 @@
             [hiccup.element :refer [link-to]]))
 
 (defn menu []
-  [:div#description (link-to "/description" "What Am I?")]
+  [:div "tes" (link-to "/description" "What Am I?")]
   [:div#navigation
    [:div.year-select
     (link-to {:class "year-name"} (str "#/2014") "2014")]
@@ -33,11 +33,10 @@
 (defn common [& body]
   (html5
     [:head
-     [:title "Telford & Wrekin Expenditure"]
+     [:title "Telford & Wrekin Expenditure Reports"]
      (include-js "//code.jquery.com/jquery-1.10.2.js")
      (include-js "//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js")
-     (include-css "/css/screen.css")
-     (include-js "/js/app.js")]
+     (include-css "/css/screen.css")]
     [:body
       (menu)
      body]))
