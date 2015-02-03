@@ -1,15 +1,22 @@
 body {
-    color: #ccc;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    background-color: #333;
+    background-color: #fafafa;
+}
+#navigation {
+    margin-top:70px;
+}
+#graph {
+    margin-top:50px;
 }
 
-h1 {
-    text-align: center;
+.content-page {
+    margin-top:100px;
 }
 
-#navigation div > a {
-  color: #eee;
-  padding: 5px;
+
+
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+    color: #fff;
+    background-color: #428bca;
 }

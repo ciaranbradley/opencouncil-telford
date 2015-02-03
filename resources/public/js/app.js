@@ -1,5 +1,5 @@
 $(function() {
-    var diameter = 1250,
+    var diameter = 1000,
     format = d3.format(",d"),
     color = d3.scale.category20c();
 
@@ -9,13 +9,15 @@ $(function() {
         .padding(5)
         .value(function(d) {return d.size});
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("div#graph").append("svg")
         .attr("width", diameter)
         .attr("height", diameter)
         .attr("class", "bubble");
 
     var apiurl = "api/v1/transparency-report";
 
+    var debitstoggle = true;
+    
     function drawBubbles(newUrl) {
         //Build the apiurl
         var url = apiurl + newUrl.replace("#","");
@@ -82,12 +84,31 @@ $(function() {
     }
 
     function processData(root) {
-        var classes = [];
+        //DEBITS ONLY AT THIS STAGE
+        
+        
+        var debits = [];
+        var credits = [];
         for(key in root) {
-            classes.push({name: key, className: key.toLowerCase(), size: (Math.abs(root[key]))});
+            if(root[key] >= 0) {
+                debits.push({name: key, className: key.toLowerCase(), size: (Math.abs(root[key]))});
+            }else {
+                credits.push({name: key, className: key.toLowerCase(), size: (Math.abs(root[key]))});
+            }
+            
         }
-        return {children: classes};
+        //console.log(debitstoggle);
+        //console.log(debits);
+        //console.log(credits);
+        return {children:debits};
+        //if(debitstoggle) {
+        //    return {children: debits};
+        //} else {
+        //    return {children: credits};
+        //}
+
     }
+    
 
     function updateTitle(year, month, column) {
         $("#title-replace").text("for " +
@@ -142,13 +163,23 @@ $(function() {
     }
 
     function handleClick(event) {
-
+        console.log("click");
         event.preventDefault();
 
         var hash = window.location.hash;
         var segment = $(event.target).attr("href").replace("#/", "");
         var segment_type = $(event.target).attr("class");
 
+        //if(segment_type == "payment-type") {
+        //    var payment_type_id = $(event.target).attr("id");
+        //    console.log(payment_type_id);
+        //    if(payment_type_id == "payment-debit") {
+        //        debitstoggle = true;
+        //    }else {
+        //        debitstoggle = false;
+        //    }
+        //}
+        
         var urlparts = getUrlParts(hash);
 
         var newUrl = buildUrl(urlparts, segment, segment_type);
@@ -171,5 +202,15 @@ $(function() {
     }
 
     $("div#navigation").delegate('a', 'click', handleClick);
+
     $(document).ready(handleFirstLoad);
+
+    $("ul.nav").on("click", "li", function() {
+        var $this = $(this);
+        $this.addClass("active")
+            //.prependTo($this.parent())
+            .siblings().removeClass("active");
+
+    });
+    
 });

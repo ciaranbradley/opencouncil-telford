@@ -3,40 +3,90 @@
             [hiccup.element :refer [link-to]]))
 
 (defn menu []
-  [:div "tes" (link-to "/description" "What Am I?")]
   [:div#navigation
    [:div.year-select
-    (link-to {:class "year-name"} (str "#/2014") "2014")]
+    [:h4 "Select Year"]
+    [:ul.nav.nav-sidebar
+     [:li {:class "active"} (link-to {:class "year-name"} (str "#/2014") "2014")]]]
    [:div.month-select
-    (link-to {:class "month-name"} (str "#/january") "January")
-    (link-to {:class "month-name"} (str "#/february") "February")
-    (link-to {:class "month-name"} (str "#/march") "March")
-    (link-to {:class "month-name"} (str "#/april") "April")
-    (link-to {:class "month-name"} (str "#/may") "May")
-    (link-to {:class "month-name"} (str "#/june") "June")
-    (link-to {:class "month-name"} (str "#/july") "July")
-    (link-to {:class "month-name"} (str "#/august") "August")
-    (link-to {:class "month-name"} (str "#/september") "September")
-    (link-to {:class "month-name"} (str "#/october") "October")
-    (link-to {:class "month-name"} (str "#/november") "November")
+    [:h4 "Select Month"]
+    [:ul.nav.nav-sidebar
+     [:li (link-to {:class "month-name"} (str "#/january") "January")]
+     [:li (link-to {:class "month-name"} (str "#/february") "February")]
+     [:li (link-to {:class "month-name"} (str "#/march") "March")]
+     [:li (link-to {:class "month-name"} (str "#/april") "April")]
+     [:li (link-to {:class "month-name"} (str "#/may") "May")]
+     [:li (link-to {:class "month-name"} (str "#/june") "June")]
+     [:li (link-to {:class "month-name"} (str "#/july") "July")]
+     [:li (link-to {:class "month-name"} (str "#/august") "August")]
+     [:li (link-to {:class "month-name"} (str "#/september") "September")]
+     [:li (link-to {:class "month-name"} (str "#/october") "October")]
+     [:li {:class "active"} (link-to {:class "month-name"} (str "#/november") "November")]]
     ;;(link-to (str "#december") "December")
     ]
    [:div.column-name
-   (link-to {:class "column-name"} (str "#/service-delivery-area") "Delivery Area ")
-   (link-to {:class "column-name"} (str "#/service-delivery-team") "Delivery Team ")
-   (link-to {:class "column-name"} (str "#/cost-c") "Cost C ")
-   (link-to {:class "column-name"} (str "#/expenditure-group") "Expenditure Group ")
-   (link-to {:class "column-name"} (str "#/account") "Account ")
-   (link-to {:class "column-name"} (str "#/supplier-name") "Supplier Name ")
-   (link-to {:class "column-name"} (str "#/transaction-date") "Transaction Date ")]])
+    [:h4 "Select Grouping"]
+    [:ul.nav.nav-sidebar
+     [:li (link-to {:class "column-name"} (str "#/service-delivery-area") "Delivery Area ")]
+     [:li (link-to {:class "column-name"} (str "#/service-delivery-team") "Delivery Team ")]
+     [:li (link-to {:class "column-name"} (str "#/cost-c") "Cost C ")]
+     [:li (link-to {:class "column-name"} (str "#/expenditure-group") "Expenditure Group ")]
+     [:li (link-to {:class "column-name"} (str "#/account") "Account ")]
+     [:li {:class "active"} (link-to {:class "column-name"} (str "#/supplier-name") "Supplier Name ")]
+     [:li (link-to {:class "column-name"} (str "#/transaction-date") "Transaction Date ")]]]
+   
+   ;;[:div.payment-type
+    ;;[:h4 "Payment Type"]
+    ;;[:ul.nav.nav-sidebar
+     ;;[:li {:class "active"} (link-to {:id "payment-debit" :class "payment-type"} (str "#/debit") "Debits")]
+     ;;  [:li (link-to {:id "payment-credit" :class "payment-type"} (str "#/credit") "Credits")]]]
+   ])
 
-(defn common [& body]
-  (html5
-    [:head
+(defn main-menu []
+  [:div#navigation
+   [:ul.nav.nav-sidebar
+    [:li (link-to "/" "Home (Graphs)")]]])
+
+(defn common [menu & body]
+  (html5 {:lang "en-gb"}
+   [:head
+    [:meta {:charset "UTF-8"}]
      [:title "Telford & Wrekin Expenditure Reports"]
+     (include-css "//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
+     (include-css "//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css")
      (include-js "//code.jquery.com/jquery-1.10.2.js")
+     (include-js "//code.jquery.com/ui/1.11.2/jquery-ui.js")
+     (include-js "//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js")
      (include-js "//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js")
-     (include-css "/css/screen.css")]
+     (include-css "/css/screen.css")
+     ]
     [:body
-      (menu)
-     body]))
+     [:nav.navbar.navbar-inverse.navbar-fixed-top
+      [:div.container-fluid
+       [:div.navbar-header
+        [:button.navbar-toggle.collapsed {:type "button"
+                                          :data-toggle "collapse"
+                                          :data-target "#navbar"
+                                          :aria-expanded "false"
+                                          :aria-controls "navbar"}
+         [:span.sr-only "Toggle Navigation"]
+         [:span.icon-bar]
+         [:span.icon-bar]
+         [:span.icon-bar]]
+
+        [:a.navbar-brand {:href "/"} "T&W Expenditure"]]
+       [:div#navbar.navbar-collapse.collapse
+        [:ul.nav.navbar-nav.navbar-right
+         [:li (link-to "/description" "What is this?")]]]]]
+     [:div.container-fluid
+      [:div.row
+       [:div.col-sm-3.col-md-2.sidebar
+        menu]
+       [:div.col-sm-9.col-md-10.main
+        body]]]]))
+
+(defn graph-page [& body]
+  (common (menu) body))
+
+(defn content-page [& body]
+  (common (main-menu) body))
