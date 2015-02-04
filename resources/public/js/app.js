@@ -12,12 +12,12 @@ $(function() {
     var svg = d3.select("div#graph").append("svg")
         .attr("width", diameter)
         .attr("height", diameter)
-        .attr("class", "bubble");
+            .attr("class", "bubble");
 
     var apiurl = "api/v1/transparency-report";
 
     var debitstoggle = true;
-    
+
     function drawBubbles(newUrl) {
         //Build the apiurl
         var url = apiurl + newUrl.replace("#","");
@@ -85,8 +85,8 @@ $(function() {
 
     function processData(root) {
         //DEBITS ONLY AT THIS STAGE
-        
-        
+
+
         var debits = [];
         var credits = [];
         for(key in root) {
@@ -95,7 +95,7 @@ $(function() {
             }else {
                 credits.push({name: key, className: key.toLowerCase(), size: (Math.abs(root[key]))});
             }
-            
+
         }
         //console.log(debitstoggle);
         //console.log(debits);
@@ -108,7 +108,7 @@ $(function() {
         //}
 
     }
-    
+
 
     function updateTitle(year, month, column) {
         $("#title-replace").text("for " +
@@ -179,7 +179,7 @@ $(function() {
         //        debitstoggle = false;
         //    }
         //}
-        
+
         var urlparts = getUrlParts(hash);
 
         var newUrl = buildUrl(urlparts, segment, segment_type);
@@ -212,5 +212,5 @@ $(function() {
             .siblings().removeClass("active");
 
     });
-    
+
 });
