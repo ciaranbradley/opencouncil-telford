@@ -7,6 +7,7 @@
    [:div.year-select
     [:h4 "Select Year"]
     [:ul.nav.nav-sidebar
+     [:li (link-to {:class "year-name"} (str "#/2013") "2013")]
      [:li {:class "active"} (link-to {:class "year-name"} (str "#/2014") "2014")]]]
    [:div.month-select
     [:h4 "Select Month"]
@@ -21,9 +22,8 @@
      [:li (link-to {:class "month-name"} (str "#/august") "August")]
      [:li (link-to {:class "month-name"} (str "#/september") "September")]
      [:li (link-to {:class "month-name"} (str "#/october") "October")]
-     [:li {:class "active"} (link-to {:class "month-name"} (str "#/november") "November")]]
-    ;;(link-to (str "#december") "December")
-    ]
+     [:li {:class "active"} (link-to {:class "month-name"} (str "#/november") "November")]
+     [:li (link-to {:class "month-name"} (str "#december") "December")]]]
    [:div.column-name
     [:h4 "Select Grouping"]
     [:ul.nav.nav-sidebar
@@ -33,14 +33,14 @@
      [:li (link-to {:class "column-name"} (str "#/expenditure-group") "Expenditure Group ")]
      [:li (link-to {:class "column-name"} (str "#/account") "Account ")]
      [:li {:class "active"} (link-to {:class "column-name"} (str "#/supplier-name") "Supplier Name ")]
-     [:li (link-to {:class "column-name"} (str "#/transaction-date") "Transaction Date ")]]]
+     [:li (link-to {:class "column-name"} (str "#/transaction-date") "Transaction Date ")]]]])
    
    ;;[:div.payment-type
     ;;[:h4 "Payment Type"]
     ;;[:ul.nav.nav-sidebar
      ;;[:li {:class "active"} (link-to {:id "payment-debit" :class "payment-type"} (str "#/debit") "Debits")]
      ;;  [:li (link-to {:id "payment-credit" :class "payment-type"} (str "#/credit") "Credits")]]]
-   ])
+
 
 (defn main-menu []
   [:div#navigation

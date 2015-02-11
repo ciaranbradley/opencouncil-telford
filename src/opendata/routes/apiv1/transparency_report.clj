@@ -13,7 +13,21 @@
 
 (def reports-folder "data/")
 
-(def reports {:2014 {:january    "Transparency_Report_January_2014.csv"
+(def reports {
+              :2013 {:january    "Transparency_Report_January_2013.csv"
+                     :february   "Transparency_Report_February_2013.csv"
+                     :march      "Transparency_Report_March_2013.csv"
+                     :april      "Transparency_Report_April_2013.csv"
+                     :may        "Transparency_Report_May_2013.csv"
+                     :june       "Transparency_Report_June_2013.csv"
+                     :july       "Transparency_Report_July_2013.csv"
+                     :august     "Transparency_Report_August_2013.csv"
+                     :september  "Transparency_Report_September_2013.csv"
+                     :october    "Transparency_Report_October_2013.csv"
+                     :november   "Transparency_Report_November_2013.csv"
+                     :december   "Transparency_Report_December_2013.csv"}
+
+              :2014 {:january    "Transparency_Report_January_2014.csv"
                      :february   "Transparency_Report_February_2014.csv"
                      :march      "Transparency_Report_March_2014.csv"
                      :april      "Transparency_Report_April_2014.csv"
