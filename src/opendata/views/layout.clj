@@ -51,15 +51,14 @@
   (html5 {:lang "en-gb"}
    [:head
     [:meta {:charset "UTF-8"}]
-     [:title "Telford & Wrekin Expenditure Reports"]
-     (include-css "//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
-     (include-css "//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css")
-     (include-js "//code.jquery.com/jquery-1.10.2.js")
-     (include-js "//code.jquery.com/ui/1.11.2/jquery-ui.js")
-     (include-js "//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js")
-     (include-js "//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js")
-     (include-css "/css/screen.css")
-     ]
+    [:title "Telford & Wrekin Expenditure Reports"]
+    (include-js "//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+    (include-css "//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css")
+    (include-css "//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css")
+    (include-js "//code.jquery.com/ui/1.11.2/jquery-ui.js")
+    (include-js "//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js")
+    (include-js "//cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js")
+    (include-css "/css/screen.css")]
     [:body
      [:nav.navbar.navbar-inverse.navbar-fixed-top
       [:div.container-fluid
