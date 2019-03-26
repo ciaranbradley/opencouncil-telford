@@ -7,7 +7,8 @@
    [:div.year-select
     [:h4 "Select Year"]
     [:ul.nav.nav-sidebar
-     [:li {:class "active"} (link-to {:class "year-name"} (str "#/2014") "2014")]]]
+     [:li {:class "active"} (link-to {:class "year-name"} (str "#/2014") "2014")]
+     [:li (link-to {:class "year-name"} (str "#/2018") "2018")]]]
    [:div.month-select
     [:h4 "Select Month"]
     [:ul.nav.nav-sidebar
@@ -34,7 +35,7 @@
      [:li (link-to {:class "column-name"} (str "#/account") "Account ")]
      [:li {:class "active"} (link-to {:class "column-name"} (str "#/supplier-name") "Supplier Name ")]
      [:li (link-to {:class "column-name"} (str "#/transaction-date") "Transaction Date ")]]]
-   
+
    ;;[:div.payment-type
     ;;[:h4 "Payment Type"]
     ;;[:ul.nav.nav-sidebar

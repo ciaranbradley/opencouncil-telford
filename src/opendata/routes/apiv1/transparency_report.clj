@@ -10,7 +10,6 @@
 ;;
 ;; A map of the available reports
 ;;
-
 (def reports-folder "data/")
 
 (def reports {:2014 {:january    "Transparency_Report_January_2014.csv"
@@ -24,9 +23,19 @@
                      :september  "Transparency_Report_September_2014.csv"
                      :october    "Transparency_Report_October_2014.csv"
                      :november   "Transparency_Report_November_2014.csv"
-                     :december nil}})
-
-
+                     :december   "Transparency_Report_December_2014.csv"}
+              :2018 {:january    "Transparency_Report_January_2018.csv"
+                     :february   "Transparency_Report_February_2084.csv"
+                     :march      "Transparency_Report_March_2018.csv"
+                     :april      "Transparency_Report_April_2018.csv"
+                     :may        "Transparency_Report_May_2018.csv"
+                     :june       "Transparency_Report_June_2018.csv"
+                     :july       "Transparency_Report_July_2018.csv"
+                     :august     "Transparency_Report_August_2018.csv"
+                     :september  "Transparency_Report_September_2018.csv"
+                     :october    "Transparency_Report_October_2018.csv"
+                     :november   "Transparency_Report_November_2018.csv"
+                     :december   "Transparency_Report_December_2018.csv"}})
 ;;
 ;; These column headers from the Transparency report format area
 ;; mapped to some keys.
@@ -34,18 +43,17 @@
 (def exp-over-100-format {
    :service-delivery-area "Service Delivery Area(T)"
    :service-delivery-team "Service Delivery Team(T)"
-   :cost-c                "CostC"
+   ;;:cost-c                "CostC"
    :expenditure-group     "ExpenditureGroup(T)"
    :account               "Account(T)"
    :supplier-name         "Supplier Name(T)"
    :transaction-date      "Trans Date"
-   :amount                "Amount"
-   })
+   :amount                "Amount"})
 
 
 ;;
 ;; Helper function to round the values from the data
-;; Taken from stack overflow
+; Taken from stack overflow
 ;; http://stackoverflow.com/questions/10751638/clojure-rounding-to-decimal-places
 ;;
 (defn round
@@ -61,7 +69,6 @@
   [year month]
   (get (get reports (keyword year)) (keyword month)))
 
-
 (defn key-ret
   "Returns the column name from the format map"
   [k]
@@ -73,7 +80,6 @@
   [line k]
   (get line (key-ret k)))
 
-
 ;;
 ;; Functions to parse the data to be consumed by the front end
 ;;
@@ -84,9 +90,8 @@
   {Supplier Name(T) 100.00} "
   [k line]
   {:name (getkey line k) :value (if-not (= (get line (key-ret :amount)) "")
-                                  (edn/read-string (get line (key-ret :amount)))
+                                  (edn/read-string (.replaceAll (get line (key-ret :amount)) "[^0-9.]" ""))
                                   0.00)})
-
 
 (defn get-all-payments
   "Takes a CSV report and a keyword for the column map
@@ -98,6 +103,10 @@
            (amount-by-key key-column line))
          lines)))
 
+(csv/parse-csv (slurp (io/resource (str reports-folder "Transparency_Report_January_2018_test.txt")))
+               :key "amount")
+
+(get-all-payments "Transparency_Report_January_2018_test.txt" :service-delivery-area)
 
 ;;
 ;; Rounding function for the payments
@@ -145,6 +154,15 @@
     (str "No report found")))
 
 
+(get-report-amounts "2018" "january" :service-delivery-area)
+
+
+
+(select-report "2018" "january")
+(key-ret (keyword :service-delivery-area))
+(get-all-payments (select-report "2018" "january") :expenditure-group)
+(get-payment-totals (select-report "2018" "january") :service-delivery-area)
+
 
 ;;
 ;; Might be nice
@@ -165,7 +183,8 @@
   :handle-ok (fn [request] (generate-string
                             {:name "Transparency Report"
                              :description "The T & W Transparency reports"
-                             :amounts-for (keys exp-over-100-format)}))
+                             :amounts-for (keys exp-over-100-format)
+                             :year (keys reports)}))
   :available-media-types ["application/json"])
 
 (defresource get-report

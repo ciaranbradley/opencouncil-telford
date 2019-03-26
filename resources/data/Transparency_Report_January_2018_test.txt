@@ -1,0 +1,20 @@
+Service Delivery Area(T),Service Delivery Team(T),ExpenditureGroup(T),Account(T),Supplier Name(T),Trans Date,Amount
+"Business, Development & Employment","AD - Development, Business & Housing",Supplies & Services,Registration / Licence Fees,EQUIFAX PLC,15/01/2018, 160.20 
+"Business, Development & Employment","AD - Development, Business & Housing",Capital Expenditure,Other Capital Expenditure,NUPLACE LTD,04/01/2018," 644,840.37 "
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Advertising,THE MIDLAND NEWS ASSOCIATION LTD,12/01/2018, 194.04 
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Legal Expenses,SHROPSHIRE COUNCIL ,15/01/2018," 8,764.20 "
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Advertising,THE MIDLAND NEWS ASSOCIATION LTD,05/01/2018, 249.48 
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Advertising,THE MIDLAND NEWS ASSOCIATION LTD,30/01/2018, 332.64 
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Legal Expenses,WHITEHOUSE HOTELS LTD,05/01/2018," 2,124.04 "
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Legal Expenses,Cornerstone Barristers,24/01/2018, 937.50 
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Legal Expenses,NO 5 CHAMBERS LIMITED,02/01/2018, 400.00 
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Advertising,THE MIDLAND NEWS ASSOCIATION LTD,30/01/2018, 249.48 
+"Business, Development & Employment",Development Management & Planning Policy,Employees,Agency Supply Costs,The Oyster Partnership Ltd,16/01/2018," 2,499.75 "
+"Business, Development & Employment",Development Management & Planning Policy,Employees,Agency Supply Costs,The Oyster Partnership Ltd,16/01/2018," 1,408.11 "
+"Business, Development & Employment",Development Management & Planning Policy,Employees,Agency Supply Costs,The Oyster Partnership Ltd,24/01/2018," 3,533.64 "
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Protective Clothing,REDACTED PERSONAL INFORMATION,02/01/2018, 115.95 
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Marketing & Publicity,Be Bold Media Limited,12/01/2018," 1,000.00 "
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Marketing & Publicity,Be Bold Media Limited,12/01/2018," 1,000.00 "
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Marketing & Publicity,Kensa Creative Ltd,15/01/2018," 1,575.00 "
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Marketing & Publicity,Kensa Creative Ltd,15/01/2018, 285.00 
+"Business, Development & Employment",Development Management & Planning Policy,Supplies & Services,Postages,ROYAL MAIL GROUP LTD ,05/01/2018, 265.00
